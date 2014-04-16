@@ -10,13 +10,13 @@ from provider.compat import user_model_label
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding field 'Client.name'
         db.add_column('oauth2_client', 'name', self.gf('django.db.models.fields.CharField')(default='', max_length=255, blank=True), keep_default=False)
 
 
     def backwards(self, orm):
-        
+
         # Deleting field 'Client.name'
         db.delete_column('oauth2_client', 'name')
 
@@ -36,7 +36,7 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
         user_model_label: {
-            'Meta': {'object_name': user_model_label.split('.')[-1]},
+            'Meta': {'object_name': user_model_label.split('.')[-1], 'db_table': "'users'"},
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),

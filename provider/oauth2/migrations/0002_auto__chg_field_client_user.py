@@ -10,13 +10,13 @@ from provider.compat import user_model_label
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Changing field 'Client.user'
         db.alter_column('oauth2_client', 'user_id', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[user_model_label], null=True))
 
 
     def backwards(self, orm):
-        
+
         # User chose to not deal with backwards NULL issues for 'Client.user'
         raise RuntimeError("Cannot reverse this migration. 'Client.user' and its values cannot be restored.")
 
@@ -36,7 +36,7 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
         user_model_label: {
-            'Meta': {'object_name': user_model_label.split('.')[-1]},
+            'Meta': {'object_name': user_model_label.split('.')[-1], 'db_table': "'users'"},
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
             'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
