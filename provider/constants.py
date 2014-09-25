@@ -9,6 +9,14 @@ CLIENT_TYPES = (
     (PUBLIC, "Public (Native and JS applications)")
 )
 
+FORCE = 0
+AUTO = 1
+
+APPROVAL_TYPES = (
+    (FORCE, "Ask authorization every time"),
+    (AUTO, "Don't ask authorization if pre-approved (ask only the first time)")
+)
+
 RESPONSE_TYPE_CHOICES = getattr(settings, 'OAUTH_RESPONSE_TYPE_CHOICES', ("code", "token"))
 
 TOKEN_TYPE = 'Bearer'

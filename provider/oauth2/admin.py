@@ -13,8 +13,13 @@ class GrantAdmin(admin.ModelAdmin):
 
 
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('url', 'user', 'redirect_uri', 'client_id', 'client_type')
+    list_display = ('name', 'is_auto_approved', 'url', 'user', 'redirect_uri', 'client_id', 'client_type', 'approval_type')
+    list_display_links = ('name', 'url', 'client_id')
+    list_filter = ('client_type', 'approval_type')
+    search_fields = ('name', 'url', 'redirect_uri', 'client_id', 'client_type')
     raw_id_fields = ('user',)
+    readonly_fields = ('client_id', 'client_secret')
+
 
 admin.site.register(AccessToken, AccessTokenAdmin)
 admin.site.register(Grant, GrantAdmin)

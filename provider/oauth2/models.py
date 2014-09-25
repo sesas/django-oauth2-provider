@@ -7,7 +7,7 @@ views in :attr:`provider.views`.
 from django.db import models
 from django.conf import settings
 from .. import constants
-from ..constants import CLIENT_TYPES
+from ..constants import CLIENT_TYPES, APPROVAL_TYPES
 from ..utils import now, short_token, long_token, get_code_expiry
 from ..utils import get_token_expiry, serialize_instance, deserialize_instance
 from .managers import AccessTokenManager
@@ -44,6 +44,7 @@ class Client(models.Model):
     client_id = models.CharField(max_length=255, default=short_token)
     client_secret = models.CharField(max_length=255, default=long_token)
     client_type = models.IntegerField(choices=CLIENT_TYPES)
+    approval_type = models.IntegerField(choices=APPROVAL_TYPES, default=constants.FORCE)
 
     def __unicode__(self):
         return self.redirect_uri
@@ -60,6 +61,11 @@ class Client(models.Model):
                     client_id=self.client_id,
                     client_secret=self.client_secret,
                     client_type=self.client_type)
+
+    def is_auto_approved(self):
+        return self.approval_type == constants.AUTO
+    is_auto_approved.short_description = "Auto-authorized"
+    is_auto_approved.boolean = True
 
     @classmethod
     def deserialize(cls, data):
